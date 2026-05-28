@@ -3,11 +3,11 @@ import time
 import os
 
 # Configuração da página web
-st.set_page_config(page_title="IA II - Portal Candombe", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="IA II - Portal Candombe", page_icon="", layout="centered")
 
-# =====================================================================
-# 🎨 ESTILIZAÇÃO CUSTOMIZADA (MATRIX & CYBERPUNK - COMBINANDO COM O ROBÔ)
-# =====================================================================
+
+# ESTILIZAÇÃO CUSTOMIZADA (MATRIX & CYBERPUNK - COMBINANDO COM O ROBÔ)
+
 st.markdown("""
     <style>
     /* Fundo escuro tecnológico baseado no fundo da foto do robô */
@@ -88,14 +88,14 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# =====================================================================
+
 # 1. MAPEAMENTO SEMÂNTICO DE INTENÇÕES (DADOS REAIS DO RELATÓRIO)
-# =====================================================================
+
 INTENCOES = {
     "seguranca": {
         "conceitos": ["segurança", "seguro", "inseguro", "criminalidade", "crime", "crimes", "roubo", "roubos", "assalto", "assaltos", "gatuno", "gatunos", "ladrão", "ladrao", "ladrões", "droga", "drogas", "tráfico", "violência", "prostituição", "perigo", "noite", "confusão", "deliquencia", "delinquência"],
         "titulo": "Segurança Pública e Criminalidade",
-        "texto": "🚨 **[DIAGNÓSTICO DE SEGURANÇA PÚBLICA - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
+        "texto": " **[DIAGNÓSTICO DE SEGURANÇA PÚBLICA - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
                  "Com base no relatório, **88%** dos moradores classificam o bairro como inseguro. Numa escala de 1000 pessoas, isto representa **880 indivíduos**.\n\n"
                  "• **Roubo:** 76% das menções (760 pessoas em 1000).\n"
                  "• **Tráfico e consumo de drogas:** 60% das menções (600 pessoas em 1000).\n"
@@ -105,7 +105,7 @@ INTENCOES = {
     "saude": {
         "conceitos": ["saúde", "saude", "hospital", "hospitais", "posto", "postos", "médico", "médicos", "medico", "doente", "doentes", "doença", "doenças", "malária", "malaria", "paludismo", "tifoide", "febre", "saneamento", "lixo", "clínica"],
         "titulo": "Saúde e Epidemiologia",
-        "texto": "🏥 **[DIAGNÓSTICO DE SAÚDE - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
+        "texto": " **[DIAGNÓSTICO DE SAÚDE - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
                  "O bairro dispõe de apenas 1 hospital e 2 postos médicos para uma população estimada entre 20.000 a 35.000 habitantes.\n\n"
                  "Num universo de 1000 pessoas:\n"
                  "• **Doenças Crónicas:** Afetam 32% dos inquiridos (**320 pessoas**).\n"
@@ -115,7 +115,7 @@ INTENCOES = {
     "infraestrutura": {
         "conceitos": ["infraestrutura", "infraestruturas", "água", "agua", "luz", "energia", "eletricidade", "apagão", "vias", "estrada", "estradas", "asfalto", "lama", "chuva", "chuvas", "buraco", "buracos", "zona 3", "poço", "cacimba", "riacho"],
         "titulo": "Infraestrutura e Serviços Básicos",
-        "texto": "⚡ **[INFRAESTRUTURA E SERVIÇOS BÁSICOS - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
+        "texto": " **[INFRAESTRUTURA E SERVIÇOS BÁSICOS - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
                  "• **Energia Elétrica:** 84% (**840 pessoas** em 1000) têm acesso regular à rede pública, enquanto 16% (**160 pessoas**) sofrem com falhas.\n"
                  "• **Água Potável:** 80% (**800 pessoas** em 1000) usam a rede pública. Porém, 20% (**200 pessoas**) dependem de cacimbas, poços e riachos urbanos.\n"
                  "• **Vias de Acesso:** As ruas principais estão asfaltadas, mas as zonas periféricas (como a Zona 3) sofrem com estradas de terra batida, buracos e muita lama nas chuvas."
@@ -123,13 +123,13 @@ INTENCOES = {
     "educacao": {
         "conceitos": ["educação", "educacao", "escola", "escolas", "ensino", "estudar", "criança", "crianças", "vagas", "vaga", "abandono", "evasão", "professor", "creche", "parque", "infantil", "aluno", "alunos"],
         "titulo": "Setor Educativo e Infância",
-        "texto": "📚 **[ANÁLISE DO SETOR EDUCATIVO - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
+        "texto": " **[ANÁLISE DO SETOR EDUCATIVO - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
                  "Embora o bairro tenha 6 escolas em funcionamento, estimativas baseadas na taxa de exclusão de 15% indicam que cerca de **480 a 825 crianças** em idade escolar estão fora do sistema de ensino por falta de vagas ou condições financeiras. O bairro apresenta uma ausência total de creches e parques infantis."
     },
     "solucoes": {
         "conceitos": ["solução", "soluções", "solucao", "ajuda", "ajudar", "resolver", "melhorar", "governo", "administração", "recomendações", "recomenda", "proposta", "propostas", "sugestão", "intervenção"],
         "titulo": "Diretrizes e Recomendações",
-        "texto": "💡 **[RECOMENDAÇÕES DA IA PARA O DESENVOLVIMENTO]**\n\n"
+        "texto": " **[RECOMENDAÇÕES DA IA PARA O DESENVOLVIMENTO]**\n\n"
                  "1. Reforço da segurança pública com policiamento e iluminação pública noturna.\n"
                  "2. Construção de novos postos médicos comunitários descentralizados.\n"
                  "3. Inserção escolar para mitigar os 15% de crianças fora do sistema.\n"
@@ -139,9 +139,9 @@ INTENCOES = {
     }
 }
 
-# =====================================================================
+
 # 2. MOTOR DE IA POR CONTEXTO LÓGICO
-# =====================================================================
+
 def motor_ia_intencao(pergunta_usuario):
     pergunta = pergunta_usuario.lower().replace("?", "").replace(".", "").replace(",", "").replace("!", "")
     palavras_pergunta = pergunta.split()
@@ -157,10 +157,10 @@ def motor_ia_intencao(pergunta_usuario):
     
     if pontuacao_intencoes[melhor_intencao] > 0:
         dados_finais = INTENCOES[melhor_intencao]
-        return f"📋 **[Contexto Identificado: {dados_finais['titulo']}]**\n\n{dados_finais['texto']}"
+        return f" **[Contexto Identificado: {dados_finais['titulo']}]**\n\n{dados_finais['texto']}"
         
     if any(saudacao in pergunta for saudacao in ["olá", "ola", "bom dia", "boa tarde", "tudo bem", "candombe", "bairro", "projeto", "relatório", "amostra", "inquiridos", "divisão"]):
-        return (f"📊 **[Dados Gerais e Caracterização da Amostra - Proporção para 1000]**\n\n"
+        return (f" **[Dados Gerais e Caracterização da Amostra - Proporção para 1000]**\n\n"
                 f"• **Localização:** Bairro Candombe Velho, Uíge, Angola.\n"
                 f"• **Equipa de Campo:** Henrique, Fernando, João, Manuel e Teodora.\n"
                 f"• **Amostra Proporcional Expandida (1000 Inquiridos):**\n"
@@ -168,12 +168,12 @@ def motor_ia_intencao(pergunta_usuario):
                 f"  - **Idades:** 18-25 anos (150), 26-35 anos (250), 36-45 anos (280), 46-55 anos (190), 56+ anos (130).\n"
                 f"• **Universo Demográfico:** População estimada entre 20.000 a 35.000 habitantes.")
 
-    return ("🤖 Compreendo que tens uma dúvida sobre o Candombe Velho. Tenta reestruturar a tua pergunta. "
+    return (" Compreendo que tens uma dúvida sobre o Candombe Velho. Tenta reestruturar a tua pergunta. "
             "Podes questionar sobre a **segurança**, **saúde/hospitais**, **água/luz/estradas**, ou a situação das **escolas**.")
 
-# =====================================================================
+
 # 3. INTERFACE INTERATIVA DO SITE (STREAMLIT)
-# =====================================================================
+
 
 # Configuração da Barra Lateral (Sidebar)
 with st.sidebar:
@@ -186,11 +186,11 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("**Grupo de Desenvolvedores (3º Ano):**")
     st.markdown("""
-    - 👨‍💻 Henrique C. Cassanda
-    - 👨‍💻 Fernando L. A. Jorge
-    - 👨‍💻 João F. da Costa
-    - 👨‍💻 Manuel A. Tolentino
-    - 👩‍💻 Teodora M. Domingos
+    -  Henrique C. Cassanda
+    -  Fernando L. A. Jorge
+    -  João F. da Costa
+    -  Manuel A. Tolentino
+    -  Teodora M. Domingos
     """)
 
 # Renderização Central do Robô (Usa o ficheiro local de forma segura)
@@ -202,7 +202,7 @@ if os.path.exists(nome_imagem):
     st.image(nome_imagem, width=180)
 else:
     # Caso o ficheiro não esteja na pasta, usa o emoji para não quebrar a interface
-    st.markdown('<div class="robot-emoji">🤖</div>', unsafe_allow_html=True)
+    st.markdown('<div class="robot-emoji"></div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
