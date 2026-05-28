@@ -3,8 +3,8 @@ import time
 import os
 from datetime import datetime
 
-# Configuração da página web
-st.set_page_config(page_title="IA II - Portal Candombe", page_icon="", layout="centered")
+# Configuração da página web (Título da Aba atualizado)
+st.set_page_config(page_title="Agente Inteligente Candombe", page_icon="", layout="centered")
 
 
 #  ESTILIZAÇÃO CUSTOMIZADA (MATRIX & CYBERPUNK)
@@ -100,7 +100,7 @@ INTENCOES = {
         "titulo": "Infraestrutura e Serviços Básicos",
         "texto": " **[INFRAESTRUTURA E SERVIÇOS BÁSICOS - PROPORÇÃO PARA 1000 INQUIRIDOS]**\n\n"
                  "• **Energia Elétrica:** 84% (**840 pessoas** em 1000) têm acesso regular à rede pública, enquanto 16% (**160 pessoas**) sofrem com falhas.\n"
-                 "• **Água Potável:** 80% (**800 pessoas** em 1000)修 usam a rede pública. Porém, 20% (**200 pessoas**) dependem de cacimbas, poços e riachos urbanos.\n"
+                 "• **Água Potável:** 80% (**800 pessoas** em 1000) usam a rede pública. Porém, 20% (**200 pessoas**) dependem de cacimbas, poços e riachos urbanos.\n"
                  "• **Vias de Acesso:** As ruas principais estão asfaltadas, mas as zonas periféricas (como a Zona 3) sofrem com estradas de terra batida, buracos e muita lama nas chuvas."
     },
     "educacao": {
@@ -135,26 +135,23 @@ def obter_saudacao_fuso_horario():
         return "Boa noite"
 
 
-# 2. MOTOR DE IA POR CONTEXTO LÓGICO (COM DETEÇÃO DE SAUDAÇÕES)
+# 2. MOTOR DE IA POR CONTEXTO LÓGICO
 
 def motor_ia_intencao(pergunta_usuario):
     pergunta = pergunta_usuario.lower().strip().replace("?", "").replace(".", "").replace(",", "").replace("!", "")
     palavras_pergunta = pergunta.split()
     
-    # 1. Verificação de Saudações (inclui gírias e erros comuns como 'olla' ou 'tade')
     gatilhos_saudacao = [
         "olá", "ola", "olla", "oi", "bom dia", "bondia", 
         "boa tarde", "boatarde", "tade", "boa noite", "boanoite", "salute"
     ]
     
-    # Se a entrada for apenas uma saudação ou contiver uma das palavras gatilho
     if pergunta in gatilhos_saudacao or any(saudacao in pergunta for saudacao in ["olá", "ola", "olla", "oi", "bom dia", "boa tarde", "boa noite"]):
         saudacao_dinamica = obter_saudacao_fuso_horario()
-        return (f" **{saudacao_dinamica}!** Sou o assistente virtual do Candombe Velho.\n\n"
+        return (f" **{saudacao_dinamica}!** Sou o Agente Inteligente do Candombe Velho.\n\n"
                 f"Estou pronto para ajudar o vosso grupo com os dados estatísticos. "
                 f"Podes perguntar-me sobre a **segurança**, **saúde (hospitais)**, **infraestrutura (água e luz)**, ou sobre as **escolas** do bairro. O que desejas analisar?")
 
-    # 2. Processamento das intenções normais do relatório
     pontuacao_intencoes = {"seguranca": 0, "saude": 0, "infraestrutura": 0, "educacao": 0, "solucoes": 0}
     
     for palavra in palavras_pergunta:
@@ -168,14 +165,13 @@ def motor_ia_intencao(pergunta_usuario):
         dados_finais = INTENCOES[melhor_intencao]
         return f" **[Contexto Identificado: {dados_finais['titulo']}]**\n\n{dados_finais['texto']}"
         
-    # 3. Informações gerais do projeto
     if any(termo in pergunta for termo in ["candombe", "bairro", "projeto", "relatório", "amostra", "inquiridos"]):
         return (f" **[Dados Gerais da Amostra - Proporção para 1000]**\n\n"
                 f"• **Localização:** Bairro Candombe Velho, Uíge, Angola.\n"
                 f"• **Amostra:** 1000 Inquiridos (55% Mulheres / 45% Homens).\n"
                 f"• **Universo Demográfico:** População estimada entre 20.000 a 35.000 habitantes.")
 
-    return ("🤖 Compreendo a tua questão, mas preciso que sejas mais específico para buscar no relatório. "
+    return (" Compreendo a tua questão, mas preciso que sejas mais específico para buscar no relatório. "
             "Tenta usar palavras como **segurança**, **hospital**, **vagas na escola**, **água** ou **luz**.")
 
 
@@ -191,7 +187,7 @@ with st.sidebar:
     st.markdown("**Docente:** Nganga Pedro")
     st.markdown("---")
     st.markdown("**Grupo de Desenvolvedores (3º Ano):**")
-    st.markdown("- 👨‍💻 Henrique C. Cassanda\n- 👨‍💻 Fernando L. A. Jorge\n- 👨‍💻 João F. da Costa\n- 👨‍💻 Manuel A. Tolentino\n- 👩‍💻 Teodora M. Domingos")
+    st.markdown("-  Henrique C. Cassanda\n-  Fernando L. A. Jorge\n-  João F. da Costa\n-  Manuel A. Tolentino\n-  Teodora M. Domingos")
 
 # Renderização Central do Robô
 nome_imagem = "images (6).jpg"
@@ -203,14 +199,15 @@ else:
     st.markdown('<div class="robot-emoji"></div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown('<h1 class="main-title">IA II - Portal Candombe Velho</h1>', unsafe_allow_html=True)
+# TÍTULO FINAL LIMPO
+st.markdown('<h1 class="main-title">Agente Inteligente Candombe Velho</h1>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">Agente de IA treinado para interpretar dados lógicos e estatísticos do relatório comunitário.</p>', unsafe_allow_html=True)
 
-# Mensagem inicial com saudação dinâmica inteligente
+# Mensagem inicial limpa
 if "messages" not in st.session_state:
     saudacao_inicial = obter_saudacao_fuso_horario()
     st.session_state.messages = [
-        {"role": "assistant", "content": f"Olá, {saudacao_inicial.lower()}! Sou o assistente virtual do Candombe Velho. Podes perguntar-me sobre a criminalidade, o estado dos hospitais, a situação da água/luz ou o abandono escolar. Como posso ajudar o vosso grupo hoje?"}
+        {"role": "assistant", "content": f"Olá, {saudacao_inicial.lower()}! Sou o Agente Inteligente do Candombe Velho. Podes perguntar-me sobre a criminalidade, o estado dos hospitais, a situação da água/luz ou o abandono escolar. Como posso ajudar o vosso grupo hoje?"}
     ]
 
 # Exibição do histórico de mensagens
